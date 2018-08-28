@@ -20,7 +20,6 @@ class ReindexFromAdmin extends \Magento\Backend\App\Action
     public function execute()
     {
         $indexIds = explode(",", $this->getRequest()->getParam('indexer_ids'));
-        var_dump($indexIds);
         if (!isset($indexIds)) {
             $this->messageManager->addError(__('Please select an index'));
         } else {
