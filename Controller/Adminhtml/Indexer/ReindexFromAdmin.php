@@ -19,12 +19,20 @@ class ReindexFromAdmin extends \Magento\Backend\App\Action
 
     public function execute()
     {
-        $indexerIds = explode(",",$this->getRequest()->getParam('indexer_ids'));
-        var_dump($indexerIds);
-        if (!isset($indexerIds)) {
-            $this->messageManager->addError(__('Please select indexers.'));
+        $indexIds = explode(",", $this->getRequest()->getParam('indexer_ids'));
+        var_dump($indexIds);
+        if (!isset($indexIds)) {
+            $this->messageManager->addError(__('Please select an index'));
         } else {
-            $this->messageManager->addSuccess(__('We have some stuff to reindex'));
+            try {
+                foreach ($indexIds as $id) {
+                    $indexer = $this->indexerFactory->create();
+                    $indexer->load($id)->reindexAll();
+                }
+                $this->messageManager->addSuccess(__('Reindex job complete', count($indexIds)));
+            } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                $this->messageManager->addError($e->getMessage());
+            }
         }
 
         $this->_redirect('*/*/list');
