@@ -28,7 +28,7 @@ class ReindexFromAdmin extends \Magento\Backend\App\Action
                     $indexer = $this->indexerFactory->create();
                     $indexer->load($id)->reindexAll();
                 }
-                $this->messageManager->addSuccess(__('Reindex job complete', count($indexIds)));
+                $this->messageManager->addSuccess(__('%1 reindex job(s) complete', count($indexIds)));
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
                 $this->messageManager->addError($e->getMessage());
             }
