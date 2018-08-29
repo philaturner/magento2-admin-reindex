@@ -9,6 +9,11 @@ class ReindexFromAdmin extends \Magento\Backend\App\Action
 
     protected $indexerFactory;
 
+    /**
+     * ReindexFromAdmin constructor.
+     * @param Context $context
+     * @param \Magento\Indexer\Model\IndexerFactory $indexerFactory
+     */
     public function __construct(
         Context $context,
         \Magento\Indexer\Model\IndexerFactory $indexerFactory
@@ -19,7 +24,7 @@ class ReindexFromAdmin extends \Magento\Backend\App\Action
 
     public function execute()
     {
-        $indexIds = explode(",", $this->getRequest()->getParam('indexer_ids'));
+        $indexIds = $this->getRequest()->getParam('indexer_ids');
         if (!isset($indexIds)) {
             $this->messageManager->addError(__('Please select an index'));
         } else {
